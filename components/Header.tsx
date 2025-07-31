@@ -5,10 +5,15 @@ import HeaderMenu from './HeaderMenu'
 import SearchBar from './SearchBar'
 import CartIcon from './CartIcon'
 import FavoriteButton from './FavoriteButton'
-import SignInButton from './SignInButton'
 import MobileMenu from './MobileMenu'
+import { currentUser } from '@clerk/nextjs/server'
+import { ClerkLoaded } from '@clerk/nextjs'
+import { SignedIn, UserButton } from '@clerk/clerk-react'
+import SignIn from './SignIn'
 
-const Header = () => {
+const Header = async () => {
+  const user = await currentUser();
+
   return (
     <header className='bg-white py-5 border-b border-b-black/20'>
       <Container className='flex items-center justify-between text-lightColor'>
@@ -21,7 +26,12 @@ const Header = () => {
           <SearchBar></SearchBar>
           <CartIcon></CartIcon>
           <FavoriteButton></FavoriteButton>
-          <SignInButton></SignInButton>
+          <ClerkLoaded>
+            <SignedIn>
+              <UserButton></UserButton>
+            </SignedIn>
+            {!user && <SignIn></SignIn>}
+          </ClerkLoaded>
         </div>
       </Container>
     </header>

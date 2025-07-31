@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
-
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "ShopCart Online Store",
@@ -16,14 +15,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`font-poppins antialiased`}
-      >
-        <Header></Header>
-        {children}
-        <Footer></Footer>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`font-poppins antialiased`}
+        >
+          <Header></Header>
+          {children}
+          <Footer></Footer>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
