@@ -5,6 +5,7 @@ import { headerData } from '@/constants/data';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import SocialMedia from './SocialMedia';
+import { useOutsideClick } from './hooks';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -13,9 +14,10 @@ interface SidebarProps {
 
 const SideMenu:FC<SidebarProps> = ({isOpen, onClose}) => {
     const pathName = usePathname()
+    const sideBarRef = useOutsideClick<HTMLDivElement>(onClose)
   return (
     <div className={`fixed inset-y-0 left-0 z-50 w-full bg-black/50 text-white/80 shadow-xl ${isOpen? "translate-x-0": "-translate-x-full"} hoverEffect`}>
-        <div className='min-w-72 max-w-96 bg-black h-screen p-10 border-r border-r-shop-light-green flex flex-col gap-6'>
+        <div ref={sideBarRef} className='min-w-72 max-w-96 bg-black h-screen p-10 border-r border-r-shop-light-green flex flex-col gap-6'>
             <div className='flex items-center justify-between gap-5'>
                 <Logo className='text-white' spanDesign="group-hover:text-white"></Logo>
                 <button className='hover:text-shop-light-green hoverEffect' onClick={onClose}> 
